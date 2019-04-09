@@ -26,19 +26,19 @@ export default class CommonConfig {
     module: {
       rules: [
         {
-          test: /\.js$/,
-          use: [
-            {
-              loader: 'babel-loader',
-            },
-          ],
-        },
-        {
           test: /\.vue(\?[^?]+)?$/,
           use: [
             {
               loader: 'weex-loader',
               options: vueLoader({ useVue: false }),
+            },
+          ],
+        },
+        {
+          test: /\.js$/,
+          use: [
+            {
+              loader: 'babel-loader',
             },
           ],
         },
