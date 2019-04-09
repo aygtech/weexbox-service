@@ -1,13 +1,13 @@
 {
   "name": "@weexbox/service",
-  "version": "0.7.2",
+  "version": "0.7.4",
   "bin": {
     "weexbox-service": "./bin/weexbox-service.js"
   },
   "scripts": {
-    "prepublishOnly": "npm run build && npm run frontend",
+    "prepublishOnly": "cnpm i && cnpm run build && cnpm run frontend",
     "build": "tsc",
-    "frontend": "cd frontend && npm i && npm run compile"
+    "frontend": "cd frontend && cnpm i && cnpm run compile"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,15 @@
   "author": "myeveryheart@qq.com",
   "license": "MIT",
   "dependencies": {
+    "file-loader": "^3.0.1",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "vue-style-loader": "^4.1.2",
+    "weex-loader": "^0.7.12",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-stage-0": "^6.24.1",
     "adm-zip": "^0.4.13",
     "autoprefixer": "^9.5.1",
     "clean-webpack-plugin": "^2.0.1",
@@ -60,21 +69,12 @@
   "devDependencies": {
     "@types/fs-extra": "^5.0.5",
     "@types/glob": "7.1.1",
-    "@types/node": "^11.13.0",
-    "@types/webpack": "^4.4.26",
+    "@types/node": "^11.13.2",
+    "@types/webpack": "^4.4.27",
     "@types/webpackbar": "^2.6.0",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.4.1",
-    "file-loader": "^3.0.1",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "vue-style-loader": "^4.1.2",
-    "weex-loader": "^0.7.12",
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.5",
-    "babel-preset-stage-0": "^6.24.1"
+    "typescript": "^3.4.2"
   }
 }
