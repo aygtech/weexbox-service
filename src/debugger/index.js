@@ -1,87 +1,38 @@
-const chalk = require('chalk')
-const boxen = require('boxen')
+const devtool = require('./devtool');
+const config = require('./config');
+const IP = require('ip');
 
-const detect = require('detect-port')
-const headless = require('./server/headless')
-const config = require('./config')
-const debugServer = require('./server')
-const mlink = require('./link')
-const { launcher } = require('./util')
-const Router = mlink.Router
-
-const { logger, util } = require('./util')
-
-function resolveConnectUrl (config) {
-  const host = config.ip + ':' + config.port
-  util.setConnectUrl(
-    config.connectUrl ||
-      `http://${host}/devtool_fake.html?_wx_devtool=ws://${host}/debugProxy/native/{channelId}`
-  )
-}
-
-exports.startServerAndLaunch = function (config, cb) {
-  this.startServer(config).then(() => {
-    cb && cb()
-    if (!config.manual) this.launch(config.ip, config.port)
+/**
+ * Start server and lanunch chrome.
+ * @param {string} entry filename/floder
+ * @param {Object} config
+ * - ip ip of node server.
+ * - port port of node server
+ * - remoteDebugPort remote-debug-port of headless.
+ * - enableHeadless enable to start headless chromium or not.
+ * @param {Function} cb
+ */
+const startDevtoolServer = async (entrys, options) => {
+  new Promise((resolve, reject) => {
+    if (options) {
+      config.ip = options.ip || IP.address();
+      config.port = options.port || 8089;
+      config.manual = options.manual || false;
+      config.CHANNELID = options.CHANNELID || options.channelId;
+      config.REMOTE_DEBUG_PORT = options.REMOTE_DEBUG_PORT || options.remoteDebugPort || 9222;
+      config.ENABLE_HEADLESS = typeof options.ENABLE_HEADLESS === 'boolean' ? options.ENABLE_HEADLESS : typeof options.enableHeadless === 'boolean' ? options.enableHeadless : true;
+    }
+    devtool.start(entrys, config, (data) => {
+      resolve(data)
+    });
   })
-}
+};
 
-exports.startServer = function (config) {
-  return new Promise((resolve, reject) => {
-    const inUse = config.inUse
-    let message = `${chalk.green('Start debugger server!')}${inUse ? `\n${chalk.red(`(on port ${inUse.open},  because ${inUse.old} is already in use)`)}` : ''}
+const api = {
+  startDevtoolServer: startDevtoolServer,
+  reload: devtool.reload
+};
 
-${chalk.bold('Websocket Address For Native: ')}
-
-${chalk.grey(`ws://${config.ip}:${config.port}/debugProxy/native/${config.CHANNELID}`)}
-
-${chalk.bold('Debug Server:')} ${chalk.grey(`http://${config.ip}:${config.port}/`)}
-`
-    debugServer.start(config.port, function () {
-      logger.log(
-        boxen(message, {
-          padding: 1,
-          borderColor: 'green',
-          margin: 1
-        })
-      )
-      resolve()
-    })
-  })
-}
-
-exports.launch = function (ip, port) {
-  const debuggerURL = 'http://' + (ip || 'localhost') + ':' + port + '/'
-  logger.info('Launching Dev Tools...')
-  if (config.ENABLE_HEADLESS) {
-    // Check whether the port is occupied
-    detect(config.REMOTE_DEBUG_PORT).then(function (open) {
-      if (+config.REMOTE_DEBUG_PORT !== open) {
-        headless.closeHeadless()
-        logger.info(
-          `Starting inspector on port ${open}, because ${
-            config.REMOTE_DEBUG_PORT
-          } is already in use`
-        )
-      }
-      else {
-        logger.info(`Starting inspector on port ${open}`)
-      }
-      config.REMOTE_DEBUG_PORT = open
-      headless.launchHeadless(`${config.ip}:${config.port}`, open)
-    })
-  }
-  launcher.launchChrome(debuggerURL, config.REMOTE_DEBUG_PORT || 9222)
-}
-
-exports.reload = function () {
-  Router.get('debugger').pushMessage('proxy.native', {
-    method: 'WxDebug.reload'
-  })
-}
-
-exports.start = function (bundles, config, cb) {
-  config.bundles = bundles
-  resolveConnectUrl(config)
-  this.startServerAndLaunch(config, cb)
-}
+module.exports = {
+  api
+};

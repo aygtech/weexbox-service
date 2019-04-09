@@ -7,7 +7,7 @@ const WsRouter = require('./router/websocket')
 const HttpRouter = require('./router/http')
 const redirectHttpRouter = require('./router/redirect')
 const app = Websockify(new Koa())
-const rootPath = path.join(__dirname, '../../frontend/public')
+const rootPath = path.join(__dirname, '../../../frontend/public')
 const { setup } = require('../link/setup')
 const { logger } = require('../util')
 

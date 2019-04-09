@@ -14,7 +14,7 @@ module.exports = {
     if (source) {
       await compile(
         source,
-        path.join(__dirname, '../frontend/public/weex'), 
+        path.join(__dirname, '../../frontend/public/weex'), 
         {
           watch: true,
           filename: '[name].js',
