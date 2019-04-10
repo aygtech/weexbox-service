@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
 const program = require('commander')
-const debug = require('../lib/debugger/debug')
-const pack = require('../lib/builder/webpack').default
+const debug = require('../lib/debug/debug')
+const pack = require('../lib/compile/webpack').default
 
 program
   .command('debug [source]')

@@ -3,7 +3,7 @@ const ip = require('ip').address()
 const path = require('path')
 const uuid = require('uuid')
 const detect = require('detect-port')
-const compile = require('../builder').default
+const compile = require('../compile').default
 const chalk = require('chalk')
 
 module.exports = {
