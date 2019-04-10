@@ -2,9 +2,8 @@ const { IosRunner, AndroidRunner } = require('./index')
 const fse = require('fs-extra')
 const path = require('path')
 const debug = require('debug')('run')
-const inquirer = require('inquirer')
 const device = require('@weex-cli/device')
-const { system, logger } = require('@weex-cli/core')
+const { system, logger, inquirer } = require('@weex-cli/core')
 
 const MESSAGETYPE = {
   STATE: 'state',
@@ -69,34 +68,47 @@ const run = async (platform) => {
       else if (state === RUNNERSTATE.START_SERVER_DONE) {
         spinner.stopAndPersist({
           symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-          text: `${logger.colors.green('Start hotreload server done')}`
+          text: `${logger.colors.green('完成')}`
         })
-        spinner = logger.spin(`Start setting native config ${logger.colors.gray('- this may take a few seconds')}`)
-        spinner.succeed('完成')
-        spinner.start('开始本地配置 - 会花费一些时间')
+        spinner = logger.spin(`开始本地配置 ${logger.colors.gray('- 会花费一些时间')}`)
       }
       else if (state === RUNNERSTATE.SET_NATIVE_CONFIG_DONE) {
-        spinner.succeed('完成')
-        spinner.start('拷贝JS资源文件 - 会花费一些时间')
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('完成')}`
+        })
+        spinner = logger.spin(`拷贝JS资源文件 ${logger.colors.gray('- 会花费一些时间')}`)
       }
       else if (state === RUNNERSTATE.COPY_JS_BUNDLE_DOEN) {
-        spinner.succeed('完成')
-        spinner.start('启动监听服务')
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('完成')}`
+        })
+        spinner = logger.spin('启动监听服务')
       }
       else if (state === RUNNERSTATE.WATCH_FILE_CHANGE_DONE) {
-        spinner.succeed('完成')
-        spinner.start('打包APP - 会花费一些时间')
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('完成')}`
+        })
+        spinner = logger.spin(`打包AAPP ${logger.colors.gray('- 会花费一些时间')}\n`)
       }
       else if (state === RUNNERSTATE.BUILD_NATIVE_DONE) {
-        spinner.succeed('完成')
-        spinner.start('启动APP - 会花费一些时间')
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('完成')}`
+        })
+        spinner = logger.spin(`启动APP ${logger.colors.gray('- 会花费一些时间')}`)
         closeSpinner = true
       }
       else if (state === RUNNERSTATE.INSTALL_AND_LANUNCH_APP_DONE) {
-        spinner.succeed('完成')
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('完成')}`
+        })
       }
       if (state === RUNNERSTATE.END) {
-        spinner.succeed('所有服务已启动，开启写bug之旅吧')
+        logger.success('所有服务已启动，开启写bug之旅吧')
       }
     })
   }
@@ -123,12 +135,18 @@ const run = async (platform) => {
   if (platform === 'android') {
     let androidConfigurationFilePath = path.resolve('android.config.json')
     let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/android')
-    spinner.start('编译 JSBundle...')
+    let spinner = logger.spin('编译 JSBundle...')
     try {
       await prepareJSBundle()
-      spinner.succeed('完成')
+      spinner.stopAndPersist({
+        symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+        text: `${logger.colors.green('完成')}`
+      })
     } catch (err) {
-      spinner.fail(err.stack || err)
+      spinner.stopAndPersist({
+        symbol: `${logger.colors.red(`[${logger.xmark}]`)}`,
+        text: `${logger.colors.red(err.stack || err)}`
+      })
       // exist
       return
     }
@@ -160,7 +178,7 @@ const run = async (platform) => {
         runnerOptions.deviceId = answers.chooseDevice
       } else if (androidDeviceList && androidDeviceList.length === 1) {
         runnerOptions.deviceId = androidDeviceList[0].id
-        spinner.succeed(`使用${androidDeviceList[0].name}${androidDeviceList[0].isSimulator ? ' (Simulator)' : ''}`)
+        logger.log(`${logger.colors.green(`[${logger.checkmark}]`)} 使用 ${logger.colors.green(`${androidDeviceList[0].name}${androidDeviceList[0].isSimulator ? ' (Simulator)' : ''}`)}`)
       }
     }
     if (fse.existsSync(androidConfigurationFilePath)) {
@@ -191,12 +209,18 @@ const run = async (platform) => {
   } else if (platform === 'ios') {
     let iosConfigurationFilePath = path.resolve('ios.config.json')
     let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/ios')
-    spinner.start('编译 JSBundle...')
+    let spinner = logger.spin('编译 JSBundle...')
     try {
       await prepareJSBundle()
-      spinner.succeed('完成')
+      spinner.stopAndPersist({
+        symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+        text: `${logger.colors.green('完成')}`
+      })
     } catch (err) {
-      spinner.fail(err.stack || err)
+      spinner.stopAndPersist({
+        symbol: `${logger.colors.red(`[${logger.xmark}]`)}`,
+        text: `${logger.colors.red(err.stack || err)}`
+      })
       // exist
       return
     }
