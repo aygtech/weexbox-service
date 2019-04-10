@@ -23,7 +23,7 @@ const RUNNERSTATE = {
   END: 7
 }
 
-const run = (platform) => {
+const run = async (platform) => {
   // const options = parameters.options
   // const analyzer = options.__analyzer
   // let platform = parameters.first

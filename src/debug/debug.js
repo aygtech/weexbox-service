@@ -6,6 +6,17 @@ const detect = require('detect-port')
 const compile = require('../compile').default
 const chalk = require('chalk')
 
+const transformOptions = async (options) => {
+  let defaultPort = await detect(8089)
+  return {
+    ip: options.host,
+    port: options.port || options.p || defaultPort,
+    channelId: options.channelid || uuid(),
+    manual: options.manual,
+    remoteDebugPort: options.remoteDebugPort
+  }
+}
+
 const debug = async (source) => {
   const options = {}
   let devtoolOptions = await transformOptions(options)
@@ -64,13 +75,3 @@ const debug = async (source) => {
 
 module.exports = debug
 
-const transformOptions = async (options) => {
-  let defaultPort = await detect(8089)
-  return {
-    ip: options.host,
-    port: options.port || options.p || defaultPort,
-    channelId: options.channelid || uuid(),
-    manual: options.manual,
-    remoteDebugPort: options.remoteDebugPort
-  }
-}
