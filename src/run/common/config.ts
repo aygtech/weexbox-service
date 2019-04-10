@@ -168,7 +168,7 @@ const androidConfigResolver = new PlatformConfigResolver({
 })
 
 const iOSConfigResolver = new PlatformConfigResolver({
-  'WeexDemo/WeexDemo-Info.plist': {
+  'WeexBoxPlayground/Info.plist': {
     AppName: {
       type: 'plist',
       key: 'CFBundleDisplayName',
@@ -194,7 +194,7 @@ const iOSConfigResolver = new PlatformConfigResolver({
       key: 'WXSocketConnectionURL',
     },
   },
-  'WeexDemo.xcodeproj/project.pbxproj': {
+  'WeexBoxPlayground.xcodeproj/project.pbxproj': {
     CodeSign: [
       {
         type: 'regexp',
