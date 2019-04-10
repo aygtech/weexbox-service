@@ -2,9 +2,9 @@ const { IosRunner, AndroidRunner } = require('./index')
 const fse = require('fs-extra')
 const path = require('path')
 const debug = require('debug')('run')
-const spinner = require('ora')()
 const inquirer = require('inquirer')
 const device = require('@weex-cli/device')
+const { system, logger } = require('@weex-cli/core')
 
 const MESSAGETYPE = {
   STATE: 'state',
@@ -24,17 +24,15 @@ const RUNNERSTATE = {
 }
 
 const run = async (platform) => {
-  // const options = parameters.options
-  // const analyzer = options.__analyzer
-  // let platform = parameters.first
+  let spinner
   let closeSpinner = false
   const runnerOptions = {
-    jsBundleFolderPath: options.target || options.__config.defaultWeexBundleTarget,
-    jsBundleEntry: options.entry || options.__config.defaultWeexBundleEntry,
-    projectPath: options.local || '',
-    applicationId: options.appid || '',
-    preCommand: options.precmd || options.__config.defaultWeexBundleCommand,
-    deviceId: options.deviceid || '',
+    jsBundleFolderPath: 'dist',
+    jsBundleEntry: 'index.js',
+    projectPath: '',
+    applicationId: '',
+    preCommand: 'npm run dev',
+    deviceId: '',
     nativeConfig: {}
   }
 
@@ -66,9 +64,14 @@ const run = async (platform) => {
     })
     event.on(MESSAGETYPE.STATE, (state) => {
       if (state === RUNNERSTATE.START) {
-        spinner.start('启动热重载服务')
+        spinner = logger.spin('启动热重载服务')
       }
       else if (state === RUNNERSTATE.START_SERVER_DONE) {
+        spinner.stopAndPersist({
+          symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
+          text: `${logger.colors.green('Start hotreload server done')}`
+        })
+        spinner = logger.spin(`Start setting native config ${logger.colors.gray('- this may take a few seconds')}`)
         spinner.succeed('完成')
         spinner.start('开始本地配置 - 会花费一些时间')
       }
@@ -118,8 +121,8 @@ const run = async (platform) => {
     platform = answers.choosePlatform
   }
   if (platform === 'android') {
-    let androidConfigurationFilePath = path.resolve(options.__config.weexAndroidConfigFilename)
-    let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve(options.__config.weexAndroidProjectPath)
+    let androidConfigurationFilePath = path.resolve('android.config.json')
+    let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/android')
     spinner.start('编译 JSBundle...')
     try {
       await prepareJSBundle()
@@ -186,8 +189,8 @@ const run = async (platform) => {
       // }
     })
   } else if (platform === 'ios') {
-    let iosConfigurationFilePath = path.resolve(options.__config.weexIOSConfigFilename)
-    let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve(options.__config.weexIOSProjectPath)
+    let iosConfigurationFilePath = path.resolve('ios.config.json')
+    let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/ios')
     spinner.start('编译 JSBundle...')
     try {
       await prepareJSBundle()
@@ -198,7 +201,7 @@ const run = async (platform) => {
       return
     }
     if (!runnerOptions.deviceId) {
-      const iosDevice = new device.IOSDevices()
+      const iosDevice = new device.IosDevices()
       let iosDeviceList = await iosDevice.getList()
       iosDeviceList = iosDeviceList.map(device => {
         if (device.isSimulator) {
