@@ -208,13 +208,13 @@ const run = async (platform) => {
   } else if (platform === 'ios') {
     let iosConfigurationFilePath = path.resolve('ios.config.json')
     let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/ios')
-    spinner = logger.spin('编译 JSBundle')
+    spinner = logger.spin('编译JSBundle')
     
     try {
       await prepareJSBundle()
       spinner.stopAndPersist({
         symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-        text: `${logger.colors.green('编译 JSBundle - 完成')}`
+        text: `${logger.colors.green('编译JSBundle - 完成')}`
       })
     } catch (err) {
       spinner.stopAndPersist({
