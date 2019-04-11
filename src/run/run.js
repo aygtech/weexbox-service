@@ -26,11 +26,11 @@ const run = async (platform) => {
   let spinner
   let closeSpinner = false
   const runnerOptions = {
-    jsBundleFolderPath: 'dist',
-    jsBundleEntry: 'index.js',
+    // jsBundleFolderPath: 'dist',
+    // jsBundleEntry: 'index.js',
     projectPath: '',
     applicationId: '',
-    preCommand: 'npm run dev',
+    // preCommand: 'npm run dev',
     deviceId: '',
     nativeConfig: {}
   }
@@ -255,8 +255,8 @@ const run = async (platform) => {
       nativeConfig = await fse.readJson(iosConfigurationFilePath, { throws: false })
     }
     runner = new IosRunner({
-      jsBundleFolderPath: path.resolve(runnerOptions.jsBundleFolderPath),
-      jsBundleEntry: runnerOptions.jsBundleEntry,
+      // jsBundleFolderPath: path.resolve(runnerOptions.jsBundleFolderPath),
+      // jsBundleEntry: runnerOptions.jsBundleEntry,
       projectPath: projectPath,
       deviceId: runnerOptions.deviceId,
       applicationId: runnerOptions.applicationId || nativeConfig.AppId,

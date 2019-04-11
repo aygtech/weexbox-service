@@ -130,7 +130,7 @@ export default class Runner extends EventEmitter {
       await this.setNativeConfig()
       this.emit(messageType.state, runnerState.setNativeConfigDone)
 
-      await this.copyJsBundle()
+      // await this.copyJsBundle()
       this.emit(messageType.state, runnerState.copyJsBundleDone)
 
       this.watchFileChange()

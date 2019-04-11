@@ -45,7 +45,7 @@ export default class Context {
     zlib: false,
   }
   sourceDir = 'src'
-  distDir = 'dist'
+  distDir = 'deploy'
   wwwDic = 'www'
   staticDir = 'static'
   configFileName = 'update-config.json'
