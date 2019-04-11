@@ -44,10 +44,10 @@ export default class IosRunner extends Runner {
       Object.assign(
         {
           onOutCallback: outString => {
-            debug('BUILD OUTPUT:', outString)
+            // debug('BUILD OUTPUT:', outString)
           },
           onErrorCallback: outString => {
-            debug('BUILD ERROR:', outString)
+            // debug('BUILD ERROR:', outString)
           },
         },
         options,

@@ -26,7 +26,7 @@ const run = async (platform) => {
   let spinner
   let closeSpinner = false
   const runnerOptions = {
-    // jsBundleFolderPath: 'dist',
+    jsBundleFolderPath: 'deploy',
     // jsBundleEntry: 'index.js',
     projectPath: '',
     applicationId: '',
@@ -91,12 +91,12 @@ const run = async (platform) => {
           symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
           text: `${logger.colors.green('启动监听服务 - 完成')}`
         })
-        spinner = logger.spin(`打包AAPP ${logger.colors.gray('- 会花费一些时间')}\n`)
+        spinner = logger.spin(`打包APP ${logger.colors.gray('- 会花费一些时间')}\n`)
       }
       else if (state === RUNNERSTATE.BUILD_NATIVE_DONE) {
         spinner.stopAndPersist({
           symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-          text: `${logger.colors.green('打包AAPP - 完成')}`
+          text: `${logger.colors.green('打包APP - 完成')}`
         })
         spinner = logger.spin(`启动APP ${logger.colors.gray('- 会花费一些时间')}`)
         closeSpinner = true
@@ -134,12 +134,12 @@ const run = async (platform) => {
   if (platform === 'android') {
     let androidConfigurationFilePath = path.resolve('android.config.json')
     let projectPath = runnerOptions.projectPath ? path.resolve(runnerOptions.projectPath) : path.resolve('platforms/android')
-    let spinner = logger.spin('编译 JSBundle')
+    let spinner = logger.spin('编译JSBundle')
     try {
       await prepareJSBundle()
       spinner.stopAndPersist({
         symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-        text: `${logger.colors.green('编译 JSBundle - 完成')}`
+        text: `${logger.colors.green('编译JSBundle - 完成')}`
       })
     } catch (err) {
       spinner.stopAndPersist({
@@ -255,7 +255,7 @@ const run = async (platform) => {
       nativeConfig = await fse.readJson(iosConfigurationFilePath, { throws: false })
     }
     runner = new IosRunner({
-      // jsBundleFolderPath: path.resolve(runnerOptions.jsBundleFolderPath),
+      jsBundleFolderPath: path.resolve(runnerOptions.jsBundleFolderPath),
       // jsBundleEntry: runnerOptions.jsBundleEntry,
       projectPath: projectPath,
       deviceId: runnerOptions.deviceId,
