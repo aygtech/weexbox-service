@@ -77,9 +77,6 @@ export default class Runner extends EventEmitter {
   }
 
   protected watchFileChange() {
-    const config = this.config
-    const entryFileName = config.jsBundleEntry
-
     if (this.filesWatcher) {
       this.filesWatcher.close()
     }
@@ -89,23 +86,18 @@ export default class Runner extends EventEmitter {
         recursive: true,
       },
       (type, name) => {
-        if (/\w*\.web\.js$/.test(name)) {
+        const wsServer = this.wsServer
+        const serverInfo = wsServer.getServerInfo()
+        const ws = wsServer.getWs()
+        if (!ws) {
           return
         }
-        if (name === entryFileName) {
-          const wsServer = this.wsServer
-          const serverInfo = wsServer.getServerInfo()
-          const ws = wsServer.getWs()
-          if (!ws) {
-            return
-          }
-          ws.send(
-            JSON.stringify({
-              method: 'WXReloadBundle',
-              params: `http://${serverInfo.hostname}:${serverInfo.port}/${entryFileName}`,
-            }),
-          )
-        }
+        ws.send(
+          JSON.stringify({
+            method: 'WXReloadBundle',
+            params: `http://${serverInfo.hostname}:${serverInfo.port}/${name}`,
+          }),
+        )
       },
     )
     return true

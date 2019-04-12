@@ -114,6 +114,7 @@ const run = async (platform) => {
   }
 
   const prepareJSBundle = async () => {
+    system.exec('npm run watch')
     await system.exec('npm run develop')
   }
 
