@@ -178,7 +178,7 @@ const run = async (platform) => {
         runnerOptions.deviceId = answers.chooseDevice
       } else if (androidDeviceList && androidDeviceList.length === 1) {
         runnerOptions.deviceId = androidDeviceList[0].id
-        logger.log(`${logger.colors.green(`[${logger.checkmark}]`)} 使用 ${logger.colors.green(`${androidDeviceList[0].name}${androidDeviceList[0].isSimulator ? ' (Simulator)' : ''}`)}`)
+        logger.log(`${logger.colors.green(`[${logger.checkmark}]`)} ${logger.colors.green(`${androidDeviceList[0].name}${androidDeviceList[0].isSimulator ? ' (Simulator)' : ''}`)}`)
       }
     }
     if (fse.existsSync(androidConfigurationFilePath)) {

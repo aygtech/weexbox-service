@@ -109,43 +109,12 @@ const androidConfigResolver = new PlatformConfigResolver({
       key: /(applicationId ")[^"]*(")/g,
     },
   },
-  'app/src/main/res/values-zh-rCN/strings.xml': {
-    AppName: {
-      type: 'xmlTag',
-      key: 'app_name',
-    },
-    SplashText: {
-      type: 'xmlTag',
-      key: 'dummy_content',
-    },
-  },
   'app/src/main/res/values/strings.xml': {
     AppName: {
-      type: 'xmlTag',
-      key: 'app_name',
+        type: 'xmlTag',
+        key: 'app_name',
     },
-    SplashText: {
-      type: 'xmlTag',
-      key: 'dummy_content',
-    },
-  },
-  'app/src/main/res/xml/app_config.xml': {
-    WeexBundle: {
-      handler: function(source, value, replacer) {
-        if (!value) {
-          return source
-        }
-        if (/https?/.test(value)) {
-          source = replacer.xmlAttr(source, 'launch_locally', 'false', 'preference')
-          return replacer.xmlAttr(source, 'launch_url', value, 'preference')
-        } else {
-          source = replacer.xmlAttr(source, 'launch_locally', 'true', 'preference')
-          const name = value.replace(/\.(we|vue)$/, '.js')
-          return replacer.xmlAttr(source, 'local_url', 'file://assets/dist/' + name, 'preference')
-        }
-      },
-    },
-  },
+},
   'app/src/main/AndroidManifest.xml': {
     AppId: {
       handler: function(source, value, replacer, basePath) {
