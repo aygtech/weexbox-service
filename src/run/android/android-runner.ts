@@ -57,11 +57,13 @@ export default class AndroidRunner extends Runner {
     const serverInfo = wsServer.getServerInfo()
     const androidDevice = new AndroidDevices()
     this.transmitEvent(androidDevice)
+    const ws = this.stringifyConfigs({ Ws: `ws://${serverInfo.hostname}:${serverInfo.port}` })
+    // console.log(ws)
     await androidDevice.run({
       id: config.deviceId,
       applicationId: config.applicationId,
       appPath,
-      androidShellCmdString: `-d ${this.stringifyConfigs({ Ws: `ws://${serverInfo.hostname}:${serverInfo.port}` })}`,
+      androidShellCmdString: `-d ${ws}`,
     })
   }
 
