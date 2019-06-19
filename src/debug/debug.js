@@ -1,4 +1,4 @@
-const { api } = require('./index')
+const { api } = require('./out-index')
 const ip = require('ip').address()
 const path = require('path')
 const uuid = require('uuid')
@@ -30,9 +30,9 @@ const debug = async (source) => {
         filename: '[name].js',
         web: false,
         config: options.config || options.c,
-        ip: devtoolOptions.ip,
-        port: devtoolOptions.port,
-        BUNDLE_DIRECTORY: 'public/weex'
+        // ip: devtoolOptions.ip,
+        // port: devtoolOptions.port,
+        // BUNDLE_DIRECTORY: 'public/weex'
       },
       async (error, output, json) => {
         let bundles = []
@@ -52,7 +52,7 @@ const debug = async (source) => {
               entry = path.resolve(source, asset.name.replace('.js', '.vue'))
             }
             return {
-              updateTime: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()} ${formateTime(date.getHours())}:${formateTime(date.getMinutes())}:${formateTime(date.getSeconds())}`,
+              updateTime: `${date.getFullYear()}-${date.getMonth()+1}-${date.getDay()} ${formateTime(date.getHours())}:${formateTime(date.getMinutes())}:${formateTime(date.getSeconds())}`,
               output: `http://${ip}:${devtoolOptions.port}/weex/${asset.name}?bundleType=vue`,
               size: (asset.size / 1024).toFixed(0),
               time: json.time,

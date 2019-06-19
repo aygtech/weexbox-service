@@ -1,5 +1,5 @@
 import * as WebpackBar from 'webpackbar'
-import CleanWebpackPlugin from 'clean-webpack-plugin'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import Util from '../util'
 import Context from '../update/context'
 import { vueLoader } from './vueLoader'
