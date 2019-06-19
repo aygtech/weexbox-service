@@ -30,9 +30,9 @@ const debug = async (source) => {
         filename: '[name].js',
         web: false,
         config: options.config || options.c,
-        // ip: devtoolOptions.ip,
-        // port: devtoolOptions.port,
-        // BUNDLE_DIRECTORY: 'public/weex'
+        ip: devtoolOptions.ip,
+        port: devtoolOptions.port,
+        BUNDLE_DIRECTORY: 'public/weex'
       },
       async (error, output, json) => {
         let bundles = []
