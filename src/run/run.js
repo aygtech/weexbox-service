@@ -61,14 +61,14 @@ const run = async (platform) => {
         spinner.clear()
       }
     })
-    event.on(MESSAGETYPE.STATE, (state) => {
+    event.on(MESSAGETYPE.STATE, (state, log) => {
       if (state === RUNNERSTATE.START) {
         spinner = logger.spin('启动热重载服务')
       }
       else if (state === RUNNERSTATE.START_SERVER_DONE) {
         spinner.stopAndPersist({
           symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-          text: `${logger.colors.green('启动热重载服务 - 完成')}`
+          text: `${logger.colors.green(`启动热重载服务 - 完成 - ${log}`)}`
         })
         spinner = logger.spin(`配置 ${logger.colors.gray('- 会花费一些时间')}`)
       }

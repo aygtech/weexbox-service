@@ -117,7 +117,8 @@ export default class Runner extends EventEmitter {
       // All method catch in here
       this.emit(messageType.state, runnerState.start)
       await this.startServer()
-      this.emit(messageType.state, runnerState.startServerDone)
+      const serverInfo = this.wsServer.getServerInfo()
+      this.emit(messageType.state, runnerState.startServerDone, `ws://${serverInfo.hostname}:${serverInfo.port}`)
 
       await this.setNativeConfig()
       this.emit(messageType.state, runnerState.setNativeConfigDone)
