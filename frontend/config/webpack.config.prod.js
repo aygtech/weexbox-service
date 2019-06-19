@@ -124,6 +124,4 @@ webpackConfig.plugins = [...webpackConfig.plugins,
   new FaviconsWebpackPlugin(helpers.root('/src/icon.png'))
 ]
 
-webpackConfig.devtool = 'none'
-
 module.exports = webpackConfig

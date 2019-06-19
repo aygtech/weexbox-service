@@ -50,7 +50,7 @@
             </a>
           </b-row>
         </div>
-        <div v-else>
+        <div v-else class="wx-home-body">
           <b-row class="bundles" v-if="bundles.length <= 0">
             <div class="tip_header">
               <i class="iconfont icon-bangzhu"></i>
@@ -59,7 +59,7 @@
                 {{$t("home.tips.noJsBundle")}}
             </div>
             <code>
-              $ npm run debug [ folder | file ]
+              $ weex debug [ folder | file ]
             </code>
           </b-row>
           <b-row class="bundles" v-for="(bundle, key) in bundles">
