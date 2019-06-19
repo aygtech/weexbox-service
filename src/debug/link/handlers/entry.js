@@ -21,7 +21,7 @@ debuggerRouter
       message.reply()
     }
     else if (method === 'WxDebug.queryServerVersion') {
-      let pkg = require('../../../../package.json')
+      let pkg = require('../../../../../../../package.json')
       debuggerRouter.pushMessage('page.entry', {
         method: 'WxDebug.pushServerVersion',
         params: {
