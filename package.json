@@ -24,10 +24,7 @@
   "author": "myeveryheart@qq.com",
   "license": "MIT",
   "dependencies": {
-    "@weex-cli/build": "^2.0.0-beta.15",
     "@weex-cli/core": "^2.0.0-beta.31",
-    "@weex-cli/device": "^2.0.0-beta.2",
-    "@weex-cli/utils": "^2.0.0-beta.2",
     "address": "^1.1.0",
     "adm-zip": "0.4.11",
     "autoprefixer": "^9.6.0",

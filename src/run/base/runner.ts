@@ -14,24 +14,13 @@ export default class Runner extends EventEmitter {
   protected filesWatcher: FSWatcher
   protected wsServer: WsServer
 
-  constructor(options: RunnerConfig, type: PLATFORM_TYPES) {
+  constructor(options: RunnerConfig) {
     super()
+    this.config = options
     this.on('error', e => {
       // To prevent the collapse
       console.error(e)
     })
-    this.checkEnv()
-    this.init(options, type)
-  }
-
-  private init(options: RunnerConfig, type: PLATFORM_TYPES) {
-    this.type = type
-    this.config = Object.assign(
-      {
-        // Some default options
-      },
-      options,
-    )
   }
 
   private async startServer() {
@@ -45,10 +34,6 @@ export default class Runner extends EventEmitter {
     await this.wsServer.init()
   }
 
-  protected checkEnv() {
-    // Do nothing
-  }
-
   protected transmitEvent(outEvent) {
     outEvent.on(messageType.outputError, message => {
       this.emit(messageType.outputError, message)
@@ -56,24 +41,6 @@ export default class Runner extends EventEmitter {
     outEvent.on(messageType.outputLog, message => {
       this.emit(messageType.outputLog, message)
     })
-  }
-
-  protected async setNativeConfig() {
-    console.error('Not define `setNativeConfig`')
-  }
-
-  protected async copyJsBundle() {
-    const options = {
-      filter: ['**/*.js', '!**/*.web.js'],
-      overwrite: true,
-    }
-    const { jsBundleFolderPath, projectPath } = this.config
-    if (PLATFORM_TYPES.ios) {
-      await copy(path.join(jsBundleFolderPath), path.join(projectPath, 'bundlejs/'), options)
-    }
-    if (PLATFORM_TYPES.android) {
-      await copy(path.join(jsBundleFolderPath), path.join(projectPath, 'app/src/main/assets/dist'), options)
-    }
   }
 
   protected watchFileChange() {
@@ -103,14 +70,6 @@ export default class Runner extends EventEmitter {
     return true
   }
 
-  protected async buildNative(options?: any) {
-    console.error('Not define `updateList`')
-  }
-
-  protected async installAndLaunchApp(appPath: string) {
-    console.error('Not define `installAndLaunchApp`')
-  }
-
   public async run(options?: any): Promise<any> {
     let appPath
     try {
@@ -120,20 +79,8 @@ export default class Runner extends EventEmitter {
       const serverInfo = this.wsServer.getServerInfo()
       this.emit(messageType.state, runnerState.startServerDone, `ws://${serverInfo.hostname}:${serverInfo.port}`)
 
-      await this.setNativeConfig()
-      this.emit(messageType.state, runnerState.setNativeConfigDone)
-
-      // await this.copyJsBundle()
-      this.emit(messageType.state, runnerState.copyJsBundleDone)
-
       this.watchFileChange()
       this.emit(messageType.state, runnerState.watchFileChangeDone)
-
-      appPath = await this.buildNative(options)
-      this.emit(messageType.state, runnerState.buildNativeDone)
-
-      await this.installAndLaunchApp(appPath)
-      this.emit(messageType.state, runnerState.installAndLaunchAppDone)
 
       this.emit(messageType.state, runnerState.done)
     } catch (error) {

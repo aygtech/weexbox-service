@@ -20,10 +20,10 @@ program
   })
 
 program
-  .command('run <platform>')
+  .command('run')
   .description('运行')
-  .action((platform) => {
-    run(platform)
+  .action(() => {
+    run()
   })
 
 program.parse(process.argv)
