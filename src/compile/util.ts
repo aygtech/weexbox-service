@@ -1,8 +1,8 @@
 import { join } from 'path'
 import { sync } from 'glob'
-import Context from './update/context'
+import { Context } from './update/context'
 
-export default class Util {
+export class Util {
   static projectPath(path: string): string {
     return join(process.cwd(), path)
   }

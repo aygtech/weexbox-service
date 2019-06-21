@@ -2,7 +2,7 @@
 
 const program = require('commander')
 const debug = require('../lib/debug/debug')
-const pack = require('../lib/compile/webpack').default
+const pack = require('../lib/compile/webpack').Compile
 const run = require('../lib/run/run')
 
 program

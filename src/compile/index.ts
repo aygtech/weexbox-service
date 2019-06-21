@@ -1,6 +1,6 @@
 import { WeexBuilder } from './webpack/WeexBuilder'
 
-const build = async (source, target, options, callback) => {
+export const build = async (source, target, options, callback) => {
   return new Promise((resolve, reject) => {
     if (
       !source ||
@@ -15,5 +15,3 @@ const build = async (source, target, options, callback) => {
     resolve(new WeexBuilder(source, target, options).build(callback))
   })
 }
-
-export default build

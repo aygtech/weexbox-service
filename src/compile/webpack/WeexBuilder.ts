@@ -12,8 +12,8 @@ import * as DEBUG from 'debug'
 
 import { exist } from './utils'
 import { vueLoader } from './vueLoader'
-import WebpackBuilder from './WebpackBuilder'
-import CommonConfig from './common.config'
+import { WebpackBuilder } from './WebpackBuilder'
+import { CommonConfig } from './common.config'
 
 const debug = DEBUG('weexbox-builder')
 

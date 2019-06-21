@@ -1,7 +1,7 @@
 const path = require('path')
 const sourcer = require('sourcer')
 
-export default class WebpackBuilder {
+export class WebpackBuilder {
   public source: string[]
   public rawSource: string
   public options: {

@@ -1,4 +1,4 @@
-export default class Config {
+export class Config {
   name: string
   ios_min_version: string
   android_min_version: string

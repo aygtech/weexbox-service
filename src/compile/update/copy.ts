@@ -1,9 +1,9 @@
-import Context from './context'
+import { Context } from './context'
 import { emptyDirSync, copySync } from 'fs-extra'
 import { join } from 'path'
 const AdmZip = require('adm-zip')
 
-export default class Copy {
+export class Copy {
   static copy(configName: string) {
     const context = new Context()
     emptyDirSync(context.android)

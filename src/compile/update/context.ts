@@ -1,7 +1,7 @@
 import { join } from 'path'
-import Util from '../util'
+import { Util } from '../util'
 
-export default class Context {
+export class Context {
   nodeConfiguration = {
     global: false,
     Buffer: false,

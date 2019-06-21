@@ -1,12 +1,12 @@
 import { readFileSync, writeFileSync, writeJsonSync } from 'fs-extra'
-import Context from './context'
-import Config from './config'
+import { Context } from './context'
+import { Config } from './config'
 const timestamp = require('time-stamp')
 import { relative } from 'path'
 import { sync } from 'md5-file'
 import * as readDir from 'readdir'
 
-export default class Md5 {
+export class Md5 {
   md5: string
   path: string
 

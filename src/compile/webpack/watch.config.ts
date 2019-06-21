@@ -1,7 +1,7 @@
 import * as webpackMerge from 'webpack-merge'
-import DevelopConfig from './develop.config'
+import { DevelopConfig } from './develop.config'
 
-export default class WatchConfig {
+export class WatchConfig {
   weexConfig = {
     watch: true,
     watchOptions: {

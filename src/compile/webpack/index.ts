@@ -1,14 +1,14 @@
 import * as webpack from 'webpack'
-import Md5 from '../update/md5'
-import Copy from '../update/copy'
-import Ready from '../update/ready'
-import WatchConfig from './watch.config'
-import DevelopConfig from './develop.config'
-import TestConfig from './test.config'
-import PreReleaseConfig from './preRelease.config'
-import ReleaseConfig from './release.config'
+import { Md5 } from '../update/md5'
+import { Copy } from '../update/copy'
+import { Ready } from '../update/ready'
+import { WatchConfig } from './watch.config'
+import { DevelopConfig } from './develop.config'
+import { TestConfig } from './test.config'
+import { PreReleaseConfig } from './preRelease.config'
+import { ReleaseConfig } from './release.config'
 
-export default class Compile {
+export class Compile {
 
   static build(name: string) {
     let weexConfig: any
