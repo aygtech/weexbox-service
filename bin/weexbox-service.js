@@ -6,10 +6,10 @@ const pack = require('../lib/compile/webpack').Compile
 const run = require('../lib/run/run')
 
 program
-  .command('debug [source]')
+  .command('debug')
   .description('调试')
-  .action((source) => {
-    debug(source)
+  .action(() => {
+    debug()
   })
 
 program
