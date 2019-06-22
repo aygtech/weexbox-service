@@ -1,6 +1,5 @@
-const path = require('path')
-const copy = require('recursive-copy')
 const fs = require('fs')
+import * as WebSocket from 'ws'
 
 import * as EventEmitter from 'events'
 import { RunnerConfig, runnerState, messageType } from '../common/runner'
@@ -55,16 +54,20 @@ export default class Runner extends EventEmitter {
       (type, name) => {
         const wsServer = this.wsServer
         const serverInfo = wsServer.getServerInfo()
-        const ws = wsServer.getWs()
-        if (!ws) {
+        const wsS = wsServer.getWs()
+        if (!wsS) {
           return
         }
-        ws.send(
-          JSON.stringify({
-            method: 'WXReloadBundle',
-            params: `http://${serverInfo.hostname}:${serverInfo.port}/${name}`,
-          }),
-        )
+        for (const ws of wsS) {
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(
+              JSON.stringify({
+                method: 'WXReloadBundle',
+                params: `http://${serverInfo.hostname}:${serverInfo.port}/${name}`,
+              }),
+            )
+          }
+        }
       },
     )
     return true

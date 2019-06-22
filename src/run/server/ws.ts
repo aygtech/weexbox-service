@@ -11,7 +11,7 @@ export default class WsServer {
   private port: number | null
   private hostname: string | null
   private staticFolder: string | null
-  private ws
+  private wsS = []
 
   constructor(options?: { defaultPort?: number; staticFolder?: string }) {
     // Do nothing
@@ -45,8 +45,7 @@ export default class WsServer {
     const server = http.createServer(app.callback())
     const wss = new WebSocket.Server({ server })
     wss.on('connection', function connection(ws) {
-      debug('ws connection')
-      that.ws = ws
+      that.wsS.push(ws)
     })
     this.setStaticFolder(app)
     await this.getPort()
@@ -63,7 +62,7 @@ export default class WsServer {
   }
 
   public getWs() {
-    return this.ws
+    return this.wsS
   }
 
   public getServerInfo() {

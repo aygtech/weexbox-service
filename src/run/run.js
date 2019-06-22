@@ -2,6 +2,7 @@ import Runner from './base/runner'
 const path = require('path')
 const debug = require('debug')('run')
 const { system, logger } = require('@weex-cli/core')
+const qrcode = require('qrcode-terminal')
 
 const MESSAGETYPE = {
   STATE: 'state',
@@ -53,6 +54,7 @@ const run = async () => {
           symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
           text: `${logger.colors.green(`启动热重载服务 - 完成 - ${log}`)}`
         })
+        qrcode.generate(log, { small: true });
         spinner = logger.spin('启动监听服务')
       }
       else if (state === RUNNERSTATE.WATCH_FILE_CHANGE_DONE) {
@@ -62,7 +64,7 @@ const run = async () => {
         })
       }
       if (state === RUNNERSTATE.END) {
-        logger.success('所有服务已启动，开启写bug之旅吧')
+        logger.success('所有服务已启动，开启写bug之旅吧\n扫描上面的二维码即可热重载')
       }
     })
   }
