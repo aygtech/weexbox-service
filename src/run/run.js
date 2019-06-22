@@ -64,13 +64,14 @@ const run = async () => {
         })
       }
       if (state === RUNNERSTATE.END) {
-        logger.success('所有服务已启动，开启写bug之旅吧\n扫描上面的二维码即可热重载')
+        system.exec('npm run debug');
+        system.exec('npm run watch');
+        logger.success('所有服务已启动，开启写bug之旅吧\n扫描上面的二维码即可热重载\n扫码浏览器的二维码即可debug')
       }
     })
   }
 
   const prepareJSBundle = async () => {
-    system.exec('npm run watch')
     await system.exec('npm run develop')
   }
   let runner
