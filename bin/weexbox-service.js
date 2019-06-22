@@ -19,10 +19,11 @@ program
     pack.build(environment)
   })
 
-program
-  .command('run')
-  .description('运行')
-  .action(() => {
+  program
+  .command('watch <environment>')
+  .description('监听')
+  .action((environment) => {
+    pack.watch(environment)
     run()
   })
 

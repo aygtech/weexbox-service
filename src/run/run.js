@@ -65,33 +65,12 @@ const run = async () => {
       }
       if (state === RUNNERSTATE.END) {
         system.exec('npm run debug');
-        system.exec('npm run watch');
-        logger.success('所有服务已启动，开启写bug之旅吧\n扫描上面的二维码即可热重载\n扫码浏览器的二维码即可debug')
+        logger.success('所有服务已启动，开启写bug之旅吧\n扫描上面的二维码即可热重载\n扫描浏览器的二维码即可debug')
       }
     })
   }
 
-  const prepareJSBundle = async () => {
-    await system.exec('npm run develop')
-  }
   let runner
-
-  spinner = logger.spin('编译JSBundle')
-  
-  try {
-    await prepareJSBundle()
-    spinner.stopAndPersist({
-      symbol: `${logger.colors.green(`[${logger.checkmark}]`)}`,
-      text: `${logger.colors.green('编译JSBundle - 完成')}`
-    })
-  } catch (err) {
-    spinner.stopAndPersist({
-      symbol: `${logger.colors.red(`[${logger.xmark}]`)}`,
-      text: `${logger.colors.red(err.stack || err)}`
-    })
-    // exist
-    return
-  }
 
   runner = new Runner({
     jsBundleFolderPath: path.resolve(runnerOptions.jsBundleFolderPath),

@@ -1,10 +1,10 @@
 import * as WebpackBar from 'webpackbar'
-const CleanWebpackPlugin = require('clean-webpack-plugin').default
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import { Util } from '../util'
 import { Context } from '../update/context'
 import { vueLoader } from './vueLoader'
 
-export class CommonConfig {
+export default class CommonConfig {
   context = new Context()
   plugins = [
     new WebpackBar({

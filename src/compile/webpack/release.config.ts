@@ -2,11 +2,11 @@ import * as webpack from 'webpack'
 import * as webpackMerge from 'webpack-merge'
 import * as UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import { Context } from '../update/context'
-import { CommonConfig } from './common.config'
+import CommonConfig from './common.config'
 const context = new Context()
 const weexboxConfig = require(context.weexboxConfigPath)
 
-export class ReleaseConfig {
+export default class ReleaseConfig {
   weexConfig = {
     module: {
       rules: [

@@ -1,5 +1,4 @@
 import * as webpackMerge from 'webpack-merge'
-import { DevelopConfig } from './develop.config'
 
 export class WatchConfig {
   weexConfig = {
@@ -9,7 +8,8 @@ export class WatchConfig {
       ignored: /node_modules/,
     },
   }
-  constructor() {
-    this.weexConfig = webpackMerge(this.weexConfig, new DevelopConfig().weexConfig)
+  constructor(name: string) {
+    const Config = require(`./${name}.config`).default
+    this.weexConfig = webpackMerge(this.weexConfig, new Config().weexConfig)
   }
 }

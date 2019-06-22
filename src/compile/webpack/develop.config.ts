@@ -1,11 +1,11 @@
 import * as webpack from 'webpack'
 import * as webpackMerge from 'webpack-merge'
 import { Context } from '../update/context'
-import { CommonConfig } from './common.config'
+import CommonConfig from './common.config'
 const context = new Context()
 const weexboxConfig = require(context.weexboxConfigPath)
 
-export class DevelopConfig {
+export default class DevelopConfig {
   weexConfig = {
     module: {
       rules: [

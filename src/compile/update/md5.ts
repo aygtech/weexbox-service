@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, writeJsonSync } from 'fs-extra'
+import { readFileSync, writeJsonSync } from 'fs-extra'
 import { Context } from './context'
 import { Config } from './config'
 const timestamp = require('time-stamp')

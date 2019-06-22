@@ -59,7 +59,7 @@ export default class Runner extends EventEmitter {
           return
         }
         for (const ws of wsS) {
-          if (ws.readyState === WebSocket.OPEN) {
+          if (ws.readyState === WebSocket.OPEN && name.includes('www')) {
             ws.send(
               JSON.stringify({
                 method: 'WXReloadBundle',
