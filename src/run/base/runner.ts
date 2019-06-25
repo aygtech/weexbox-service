@@ -52,6 +52,7 @@ export default class Runner extends EventEmitter {
         recursive: true,
       },
       (type, name) => {
+        name = name.replace(/\\/g, '\/')
         const wsServer = this.wsServer
         const serverInfo = wsServer.getServerInfo()
         const wsS = wsServer.getWs()
