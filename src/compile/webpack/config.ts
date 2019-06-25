@@ -22,7 +22,7 @@ export class Config {
     }
 
     const mode = 'none'
-    const cache = true
+    const cache = watch ? true : false
     const entry = Util.entries()
     const output = {
       path: context.distPath,
