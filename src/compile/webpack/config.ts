@@ -29,7 +29,7 @@ export class Config {
       filename: `${context.wwwDic}/[name].js`,
     }
     const resolve = {
-      extensions: ['.mjs', '.js', '.vue', '.json'],
+      extensions: ['.ts', '.mjs', '.js', '.vue', '.json'],
     }
 
     const plugins = []
@@ -53,6 +53,14 @@ export class Config {
     }
 
     const rules = [
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        },
+      },
       {
         test: /\.vue(\?[^?]+)?$/,
         use: [
@@ -87,6 +95,9 @@ export class Config {
 
     const module = { rules }
     const node = context.nodeConfiguration
+    const externals = {
+      vue: 'Vue',
+    }
 
     this.weexConfig = {
       watch,
@@ -99,6 +110,7 @@ export class Config {
       plugins,
       module,
       node,
+      externals,
     }
   }
 }

@@ -10,7 +10,7 @@ export class Util {
   static entries(): Map<string, string> {
     const context = new Context()
     const sourcePath = this.projectPath(context.sourceDir)
-    const globPath = `${sourcePath}/*/*/index.js`
+    const globPath = `${sourcePath}/*/*/index.*`
     const entries = new Map<string, string>()
     sync(globPath).forEach((indexEntry) => {
       const tmp = indexEntry.split('/').splice(-3)
