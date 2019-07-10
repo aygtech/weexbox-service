@@ -1,6 +1,6 @@
 {
   "name": "@weexbox/service",
-  "version": "1.0.4",
+  "version": "1.1.1",
   "bin": {
     "weexbox-service": "./bin/weexbox-service.js"
   },

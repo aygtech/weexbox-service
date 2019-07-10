@@ -4,7 +4,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import { Util } from '../util'
 import { Context } from '../update/context'
 import { vueLoader } from './vueLoader'
-import { UglifyJsPlugin } from 'uglifyjs-webpack-plugin'
+import * as UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 
 export class Config {
 
@@ -55,11 +55,14 @@ export class Config {
     const rules = [
       {
         test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        },
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+            },
+          },
+        ],
       },
       {
         test: /\.vue(\?[^?]+)?$/,
